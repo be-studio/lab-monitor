@@ -1,15 +1,14 @@
 import { GridItem } from "@chakra-ui/react";
+import { VideoContainer } from "../Video/VideoContainer";
 
 export const Content = () => {
   return (
     <>
       <GridItem bg="gray.100" area="main">
-        Video Content
+        <VideoContainer />
       </GridItem>
 
-      <GridItem bg="white" area="footer">
-        Comments
-      </GridItem>
+      <GridItem bg="white" area="footer">Comments</GridItem>
     </>
   );
 };
