@@ -8,6 +8,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
 } from "@chakra-ui/react";
+import { MdOutlinePlayArrow, MdOutlinePause } from "react-icons/md";
 import { Annotation } from "../../utility/types";
 
 interface Props {
@@ -31,8 +32,9 @@ export const VideoPlayer = ({
   });
   const [frameDataInfo, setFrameDataInfo] = useState("");
   const [videoPosition, setVideoPosition] = useState(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [playbackIcon, setPlaybackIcon] = useState(<MdOutlinePlayArrow />);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -52,7 +54,7 @@ export const VideoPlayer = ({
       const canvas = canvasRef.current;
 
       if (video && canvas) {
-        const ctx = canvasRef.current.getContext("2d");
+        const ctx = canvas.getContext("2d");
 
         if (!ctx) {
           return;
@@ -127,17 +129,19 @@ export const VideoPlayer = ({
     const video = videoRef.current;
 
     if (video) {
-      if (video.paused) {
+      if (video.paused || video.ended) {
         video.play();
+        setPlaybackIcon(<MdOutlinePause />);
       } else {
         video.pause();
+        setPlaybackIcon(<MdOutlinePlayArrow />);
       }
     }
   };
 
   const handleVideoScrub = (value: number) => {
     setVideoPosition(value);
-    if (videoRef?.current) {
+    if (videoRef.current) {
       videoRef.current.currentTime = value;
     }
   };
@@ -171,7 +175,7 @@ export const VideoPlayer = ({
 
         <HStack>
           <Box width="50%">
-            <Button onClick={handleVideoPlayback}>Play</Button>
+            <Button onClick={handleVideoPlayback}>{playbackIcon}</Button>
           </Box>
 
           <Box width="50%" textAlign="right">
