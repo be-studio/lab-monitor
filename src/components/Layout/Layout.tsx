@@ -1,6 +1,7 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Header } from "./Header";
-import { Content } from "./Content";
+import { Menu } from "./Menu";
+import { VideoContainer } from "../Video/VideoContainer";
 
 export const Layout = () => {
   return (
@@ -19,19 +20,33 @@ export const Layout = () => {
       }}
       gridTemplateColumns={{
         sm: "1fr",
-        md: "10em 1fr",
+        md: "12rem 1fr",
       }}
       width="100%"
       height="100vh"
       gap={0}
       color="blackAlpha.700"
     >
-      <Header />
-      <GridItem display={{ sm: "none", md: "block" }} bg="gray.200" area="nav">
-        Menu
+      <GridItem background="gray.300" paddingLeft="1em" area="header">
+        <Header />
       </GridItem>
 
-      <Content />
+      <GridItem
+        display={{ sm: "none", md: "block" }}
+        background="gray.200"
+        padding="1em"
+        area="nav"
+      >
+        <Menu />
+      </GridItem>
+
+      <GridItem background="gray.100" area="main">
+        <VideoContainer />
+      </GridItem>
+
+      <GridItem background="white" area="footer">
+        Comments
+      </GridItem>
     </Grid>
   );
 };
