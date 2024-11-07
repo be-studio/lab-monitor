@@ -2,6 +2,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import { Header } from "./Header";
 import { Menu } from "./Menu";
 import { VideoContainer } from "../Video/VideoContainer";
+import { Comments } from "../Comments/Comments";
 
 export const Layout = () => {
   return (
@@ -45,7 +46,7 @@ export const Layout = () => {
       </GridItem>
 
       <GridItem background="white" area="footer">
-        Comments
+        <Comments />
       </GridItem>
     </Grid>
   );

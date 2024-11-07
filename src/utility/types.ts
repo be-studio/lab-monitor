@@ -8,4 +8,6 @@ export interface CommentPub {
   picture: string;
 
   message: string;
+
+  time: string;
 }
