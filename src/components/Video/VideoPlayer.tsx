@@ -222,7 +222,7 @@ export const VideoPlayer = ({
           <Box
             width="70%"
             textAlign="right"
-            fontSize={{ base: "0.7rem", md: "1rem" }}
+            fontSize={{ base: "0.65rem", md: "1rem" }}
             data-testid="video-frame-info"
           >
             {frameDataInfo}

@@ -11,11 +11,11 @@ export const Comment = ({ comment }: Props) => {
 
   return (
     <Flex>
-      <Box padding="0.5em">
+      <Box padding="0.5em" width="5em">
         <Avatar picture={picture} />
       </Box>
 
-      <Box padding="0.5em" fontSize="0.8rem">
+      <Box padding="0.5em" fontSize="0.8rem" flex="1">
         <span data-testid="comment-author-time">
           <strong>{name}</strong> ({time})
         </span>
