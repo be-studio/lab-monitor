@@ -19,6 +19,9 @@ export const useGetComments = () => {
     socketRef.current.onmessage = (event) => {
       const newComment = JSON.parse(event.data) as CommentPub;
 
+      // Need to generate unique IDs for each incoming comment to be used as
+      // keys when the Comment component is iterated in the Comments
+      // component.
       newComment.id = crypto.randomUUID();
 
       const now = new Date();

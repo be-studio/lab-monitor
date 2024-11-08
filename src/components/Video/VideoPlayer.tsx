@@ -61,6 +61,8 @@ export const VideoPlayer = ({
     const canvas = canvasRef.current;
 
     if (video && canvas) {
+      // Need to set the canvas dimensions to match that of the video to
+      // correctly draw the annotation rectangles.
       setCanvasDimensions({
         width: video.clientWidth,
         height: video.clientHeight,
@@ -80,15 +82,21 @@ export const VideoPlayer = ({
           return;
         }
 
+        // Clear previously drawn rectangles first.
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         const frameData = annotations[frame];
         setFrameDataInfo(
-          `Frame ${frame}: ${frameData ? JSON.stringify(frameData) : ""}`,
+          `Frame ${frame}: ${frameData ? JSON.stringify(frameData) : "-"}`,
         );
         if (frameData) {
           frameData.forEach((rect) => {
             const [x, y, width, height] = rect;
+            // x and y represent coordinates for the centre of the rectangle
+            // so need to calculate top left coordinates for canvas drawing.
+            // Need to multiply the coordinates by how much the respective
+            // canvas dimension is a proportion of the video's original
+            // dimension.
             const topLeftX =
               (x - width / 2) * (canvasDimensions.width / video.videoWidth);
             const topLeftY =
@@ -129,6 +137,7 @@ export const VideoPlayer = ({
         width: video.clientWidth,
         height: video.clientHeight,
       });
+      // Need to redraw rectangles for the current frame on resize of window.
       drawRectangles(Math.floor(video.currentTime * VIDEO_FRAME_RATE));
     }
   }, [drawRectangles]);

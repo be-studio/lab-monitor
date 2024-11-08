@@ -9,6 +9,8 @@ export const Comments = () => {
 
   const comments = useGetComments();
 
+  // Hook to auto-scroll comments div to bottom to bring latest comment
+  // into view.
   useScrollTo(commentsRef, comments);
 
   return (
