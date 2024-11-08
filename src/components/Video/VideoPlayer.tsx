@@ -93,6 +93,10 @@ export const VideoPlayer = ({
       const currentFrame = Math.floor(video.currentTime * VIDEO_FRAME_RATE);
       setVideoPosition(video.currentTime);
       drawRectangles(currentFrame);
+
+      if (video.ended) {
+        setPlaybackIcon(<MdOutlinePlayArrow />);
+      }
     }
   }, [drawRectangles]);
 
@@ -160,9 +164,14 @@ export const VideoPlayer = ({
         <Box position="relative">
           <video
             ref={videoRef}
-            src="https://reach-industries-candidate-tests.s3.eu-west-2.amazonaws.com/FrontendCandidateTest-FINAL.mp4"
             style={{ width: "100%", height: "auto" }}
+            playsInline
+            muted
           >
+            <source
+              src="https://reach-industries-candidate-tests.s3.eu-west-2.amazonaws.com/FrontendCandidateTest-FINAL.mp4"
+              type="video/mp4"
+            />
             <track kind="captions" />
           </video>
           <canvas
@@ -174,11 +183,15 @@ export const VideoPlayer = ({
         </Box>
 
         <HStack>
-          <Box width="50%">
+          <Box width="30%">
             <Button onClick={handleVideoPlayback}>{playbackIcon}</Button>
           </Box>
 
-          <Box width="50%" textAlign="right">
+          <Box
+            width="70%"
+            textAlign="right"
+            fontSize={{ base: "0.7rem", md: "1rem" }}
+          >
             {frameDataInfo}
           </Box>
         </HStack>
