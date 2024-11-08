@@ -1,21 +1,15 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { Box } from "@chakra-ui/react";
 import { Comment } from "./Comment";
 import { useGetComments } from "../../hooks/useGetComments";
+import { useScrollTo } from "../../hooks/useScrollTo";
 
 export const Comments = () => {
   const commentsRef = useRef<HTMLDivElement | null>(null);
 
   const comments = useGetComments();
 
-  useEffect(() => {
-    if (commentsRef.current) {
-      commentsRef.current.scrollTo({
-        top: commentsRef.current.scrollHeight,
-        behavior: "smooth",
-      });
-    }
-  }, [comments]);
+  useScrollTo(commentsRef, comments);
 
   return (
     <Box ref={commentsRef} height="100%" overflowY="scroll">

@@ -16,7 +16,10 @@ export const Comment = ({ comment }: Props) => {
       </Box>
 
       <Box padding="0.5em" fontSize="0.8rem">
-        <strong>{name}</strong> ({time})<br />
+        <span data-testid="comment-author-time">
+          <strong>{name}</strong> ({time})
+        </span>
+        <br />
         {message}
       </Box>
     </Flex>

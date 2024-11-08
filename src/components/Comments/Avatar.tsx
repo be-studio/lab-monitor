@@ -5,5 +5,12 @@ interface Props {
 }
 
 export const Avatar = ({ picture }: Props) => (
-  <Image src={picture} width="40px" height="40px" borderRadius="50%" />
+  <Image
+    src={picture}
+    width="40px"
+    height="40px"
+    borderRadius="50%"
+    aria-label="Avatar"
+    alt="Avatar"
+  />
 );
