@@ -8,7 +8,6 @@ export const downloadFile = (
   anchor.download = filename;
   anchor.href = window.URL.createObjectURL(blob);
   const clickEvent = new MouseEvent("click", {
-    view: window,
     bubbles: true,
     cancelable: true,
   });

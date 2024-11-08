@@ -1,4 +1,10 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  PropsWithChildren,
+} from "react";
 import {
   Box,
   HStack,
@@ -7,6 +13,7 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
+  Spinner,
 } from "@chakra-ui/react";
 import { MdOutlinePlayArrow, MdOutlinePause } from "react-icons/md";
 import { Annotation } from "../../utility/types";
@@ -20,6 +27,19 @@ interface Props {
 }
 
 const VIDEO_FRAME_RATE = 30;
+
+const CenteredView = ({ children }: PropsWithChildren) => (
+  <Box width="100%" height="100%" position="relative">
+    <Box
+      position="absolute"
+      top="50%"
+      left="50%"
+      transform="translate(-50%, -50%)"
+    >
+      {children}
+    </Box>
+  </Box>
+);
 
 export const VideoPlayer = ({
   annotations,
@@ -151,11 +171,19 @@ export const VideoPlayer = ({
   };
 
   if (isLoadingAnnotations) {
-    return <>Loading</>;
+    return (
+      <CenteredView>
+        <Spinner />
+      </CenteredView>
+    );
   }
 
   if (errorGettingAnnotations) {
-    return <>There has been a problem loading the annotations</>;
+    return (
+      <CenteredView>
+        There has been a problem loading the annotations.
+      </CenteredView>
+    );
   }
 
   return (
@@ -167,6 +195,7 @@ export const VideoPlayer = ({
             style={{ width: "100%", height: "auto" }}
             playsInline
             muted
+            aria-label="Video"
           >
             <source
               src="https://reach-industries-candidate-tests.s3.eu-west-2.amazonaws.com/FrontendCandidateTest-FINAL.mp4"
@@ -179,25 +208,29 @@ export const VideoPlayer = ({
             style={{ position: "absolute", top: 0, left: 0 }}
             width={canvasDimensions.width}
             height={canvasDimensions.height}
+            data-testid="canvas"
           />
         </Box>
 
         <HStack>
           <Box width="30%">
-            <Button onClick={handleVideoPlayback}>{playbackIcon}</Button>
+            <Button onClick={handleVideoPlayback} aria-label="Playback">
+              {playbackIcon}
+            </Button>
           </Box>
 
           <Box
             width="70%"
             textAlign="right"
             fontSize={{ base: "0.7rem", md: "1rem" }}
+            data-testid="video-frame-info"
           >
             {frameDataInfo}
           </Box>
         </HStack>
 
         <Slider
-          aria-label="slider-ex-1"
+          aria-label="Video Scrubber"
           onChange={handleVideoScrub}
           min={0}
           max={videoRef?.current?.duration ? videoRef.current.duration : 0}

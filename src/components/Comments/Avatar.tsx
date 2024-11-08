@@ -7,8 +7,8 @@ interface Props {
 export const Avatar = ({ picture }: Props) => (
   <Image
     src={picture}
-    width="40px"
-    height="40px"
+    width="3rem"
+    height="3rem"
     borderRadius="50%"
     aria-label="Avatar"
     alt="Avatar"

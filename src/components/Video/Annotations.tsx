@@ -28,9 +28,7 @@ export const Annotations = ({ annotations }: Props) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button aria-label="Open raw annotations JSON data">
-          Raw JSON Data
-        </Button>
+        <Button>Raw JSON Data</Button>
       </PopoverTrigger>
       <PopoverContent width={{ base: "sm", md: "md" }}>
         <PopoverArrow />
@@ -44,6 +42,7 @@ export const Annotations = ({ annotations }: Props) => {
               fontSize="0.7rem"
               readOnly
               aria-label="Raw annotations JSON data"
+              data-testid="raw-annotations-json-data"
             />
           </Box>
 

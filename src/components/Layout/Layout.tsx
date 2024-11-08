@@ -32,7 +32,7 @@ export const Layout = () => {
           "nav footer"`,
         }}
         gridTemplateRows={{
-          base: "3em 1fr 0.25vh",
+          base: "3em 1fr 40vh",
           sm: "3em 1fr 10em",
           md: "3em 1fr 10em",
         }}

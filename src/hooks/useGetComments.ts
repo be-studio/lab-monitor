@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { CommentPub } from "../utility/types";
 
+const WEBSOCKET_URL = "wss://ttchatsocket.lumi.systems:443/";
+
 export const useGetComments = () => {
   const [comments, setComments] = useState<CommentPub[]>([]);
   const socketRef = useRef<WebSocket | null>(null);
@@ -8,7 +10,7 @@ export const useGetComments = () => {
   const padZeroes = (value: number) => (value < 10 ? "0" + value : value);
 
   useEffect(() => {
-    socketRef.current = new WebSocket("wss://ttchatsocket.lumi.systems:443/");
+    socketRef.current = new WebSocket(WEBSOCKET_URL);
 
     socketRef.current.onopen = () => {
       console.log("Connection established with websocket");
