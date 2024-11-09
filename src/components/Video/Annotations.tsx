@@ -28,10 +28,15 @@ export const Annotations = ({ annotations }: Props) => {
   };
 
   return (
-    <>
+    <Box textAlign="center">
       <Button onClick={() => onOpen()}>Raw JSON Data</Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal
+        size={{ base: "sm", md: "md" }}
+        isCentered
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Raw JSON Data</ModalHeader>
@@ -57,6 +62,6 @@ export const Annotations = ({ annotations }: Props) => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };

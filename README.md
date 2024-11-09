@@ -104,7 +104,7 @@ The 'Comments' part of the application displays mock comments delivered via webs
 
 In addition to some of the challenges faced as described in earlier sections I list the following:
 
-- A more streamlined approach to the layout, more work on the responsiveness and spacing in the layout. More effort on moving styles out from inline locations in code. For Chakra UI this could mean updating its `Theme.js` file or creating a custom theme. Other alternatives include using other CSS approaches (e.g., Tailwind) and/or other comopnent libraries.
+- A more streamlined approach to the layout, more work on the responsiveness and spacing in the layout. More effort on moving styles out from inline locations in code. For Chakra UI this could mean further adding styles to apply globally and to components via the `extendTheme` function as seen in `App.tsx`. Other alternatives include using other CSS approaches (e.g., Tailwind) and/or other comopnent libraries.
 
 - More work needs to be done to refine the responsiveness of the application including better sizing of components especially between portrait and landscape oriented screens.
 
@@ -114,9 +114,9 @@ In addition to some of the challenges faced as described in earlier sections I l
 
 - There needs to be work done to deal with the situation where the screen is switched from mobile to desktop and the popup menu is open - ideally it should close on entering a desktop screen size, but resumes its open state on switching back to mobile.
 
-- There were challenges to get the video to playback on mobile devices due to restrictions imposed by certain browsers on whether they should be muted, can be auto-played, etc. I ensured the video was set with `playsInline`, `muted` attributes and no `autoPlay` attribute, but work needs to be done to place a poster as a placeholder for the video before it renders on mobile devices.
+- There were challenges to get the video to playback on mobile devices due to restrictions imposed by certain browsers on whether they should be muted, can be auto-played, etc. I ensured the video was set with `playsInline`, `muted` attributes and no `autoPlay` attribute.
 
-- A number of tests have been written for various components and hooks. Due to time constraints more coverage is required on the `VideoPlayer` component although a challenge exists to mock the video player and spy on its various functions to test the event handlers for the player. Tests also need writing for a few other mainly layout-based components.
+- A number of tests have been written for various components and hooks. Due to time constraints more coverage is required on the `VideoPlayer` component although a challenge exists to mock the video player and spy on its various functions to test the event handlers for the player. Tests also need writing for a few other mainly layout-based components. Other considerations could include end-to-end testing, using e.g., Cypress.
 
 - With more time and effort the application could be optimised for performance including looking at the final build bundle sizes to see if they can be reduced. Options for optimisation include using streamlined libraries or parts of as necessary, lazy loading.
 

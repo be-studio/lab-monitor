@@ -202,6 +202,7 @@ export const VideoPlayer = ({
           <video
             ref={videoRef}
             style={{ width: "100%", height: "auto" }}
+            poster="video-poster.jpg"
             playsInline
             muted
             aria-label="Video"
@@ -211,6 +212,7 @@ export const VideoPlayer = ({
               type="video/mp4"
             />
             <track kind="captions" />
+            Your browser does not support playing back this video.
           </video>
           <canvas
             ref={canvasRef}

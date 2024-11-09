@@ -7,7 +7,7 @@ interface Props {
 
 export const Header = ({ onOpenMobileMenu }: Props) => {
   return (
-    <HStack>
+    <HStack paddingTop="0.25em">
       <Box display={{ base: "block", md: "none" }}>
         <Button
           backgroundColor="gray.300"
