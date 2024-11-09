@@ -19,7 +19,7 @@ export const Header = ({ onOpenMobileMenu }: Props) => {
       </Box>
 
       <Box>
-        <Heading fontSize={{ base: "1.1rem", sm: "1.5rem", md: "2rem" }}>
+        <Heading fontSize={{ base: "1.1rem", sm: "1.1rem", md: "2rem" }}>
           Reach Industries Frontend Assessment
         </Heading>
       </Box>
