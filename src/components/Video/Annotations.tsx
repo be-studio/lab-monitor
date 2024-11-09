@@ -1,12 +1,12 @@
 import {
   Box,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
   Button,
   Textarea,
 } from "@chakra-ui/react";
@@ -19,6 +19,8 @@ interface Props {
 }
 
 export const Annotations = ({ annotations }: Props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const rawData = JSON.stringify(annotations);
 
   const handleDownload = () => {
@@ -26,34 +28,35 @@ export const Annotations = ({ annotations }: Props) => {
   };
 
   return (
-    <Popover>
-      <PopoverTrigger>
-        <Button>Raw JSON Data</Button>
-      </PopoverTrigger>
-      <PopoverContent width={{ base: "sm", md: "md" }}>
-        <PopoverArrow />
-        <PopoverCloseButton aria-label="Close raw annotations JSON data" />
-        <PopoverHeader>Raw JSON Data</PopoverHeader>
-        <PopoverBody>
-          <Box>
-            <Textarea
-              value={rawData}
-              fontFamily="mono"
-              fontSize="0.7rem"
-              readOnly
-              aria-label="Raw annotations JSON data"
-              data-testid="raw-annotations-json-data"
-            />
-          </Box>
+    <>
+      <Button onClick={() => onOpen()}>Raw JSON Data</Button>
 
-          <Box>
-            <Button onClick={handleDownload} aria-label="Download">
-              <MdDownload />
-              Download
-            </Button>
-          </Box>
-        </PopoverBody>
-      </PopoverContent>
-    </Popover>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Raw JSON Data</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box>
+              <Textarea
+                value={rawData}
+                fontFamily="mono"
+                fontSize="0.7rem"
+                readOnly
+                aria-label="Raw annotations JSON data"
+                data-testid="raw-annotations-json-data"
+              />
+            </Box>
+
+            <Box>
+              <Button onClick={handleDownload} aria-label="Download">
+                <MdDownload />
+                Download
+              </Button>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };

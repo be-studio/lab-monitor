@@ -84,7 +84,7 @@ The 'Video' part of the application is the most complex and is comprised of a nu
   - The `handleResize` callback updates the canvas dimensions in state with window resize and redraws any existing rectangles based on the new dimensions.
   - The above callbacks are memoised with `useCallback` to avoid unnecessary re-renders of the `useEffect` they are called upon via the event listeners. `drawRectangles` also has to be memoised.
   - Event handlers are provided for the video playback button and the scrub slider. Custom controls were created instead of using the video's own inherent controls because the overlaid canvas obstructs access to the inherent controls. Also custom controls provide for more flexible setup. Again, much use was made of Chakra UI components to lay out the interface.
-  - The current video frame and associated annotation data are displayed. A 'Raw JSON Data' button opens a popup where the JSON data is displayed and a button is available for JSON download. A `downloadFile` utility is called for this purpose. This utility creates a blob from the stringified JSON with the correct file type. A hyperlink, invisible to users, is created which acts as the download link for the blob accessed via the `window.URL.createObjectURL` method and is programmatically clicked to 'download' JSON as a file to the user's computer. To avoid memory leaks `window.URL.revokeObjectURL` is called and the hyperlink removed from the DOM.
+  - The current video frame and associated annotation data are displayed. A 'Raw JSON Data' button opens a modal where the JSON data is displayed and a button is available for JSON download. A `downloadFile` utility is called for this purpose. This utility creates a blob from the stringified JSON with the correct file type. A hyperlink, invisible to users, is created which acts as the download link for the blob accessed via the `window.URL.createObjectURL` method and is programmatically clicked to 'download' JSON as a file to the user's computer. To avoid memory leaks `window.URL.revokeObjectURL` is called and the hyperlink removed from the DOM.
 
 ### Comments
 
@@ -117,6 +117,8 @@ In addition to some of the challenges faced as described in earlier sections I l
 - There were challenges to get the video to playback on mobile devices due to restrictions imposed by certain browsers on whether they should be muted, can be auto-played, etc. I ensured the video was set with `playsInline`, `muted` attributes and no `autoPlay` attribute, but work needs to be done to place a poster as a placeholder for the video before it renders on mobile devices.
 
 - A number of tests have been written for various components and hooks. Due to time constraints more coverage is required on the `VideoPlayer` component although a challenge exists to mock the video player and spy on its various functions to test the event handlers for the player. Tests also need writing for a few other mainly layout-based components.
+
+- With more time and effort the application could be optimised for performance including looking at the final build bundle sizes to see if they can be reduced. Options for optimisation include using streamlined libraries or parts of as necessary, lazy loading.
 
 ## Resources
 

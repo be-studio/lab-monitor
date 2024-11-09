@@ -6,27 +6,31 @@ import * as DownloadFileModule from "../../utility/downloadFile";
 import { Annotation } from "../../utility/types";
 
 describe("Annotations Component", () => {
-  it("should render without popup initially", () => {
+  it("should render without modal initially", () => {
     render(<Annotations annotations={[]} />);
 
     expect(
       screen.getByRole("button", { name: "Raw JSON Data" }),
     ).toBeInTheDocument();
+    expect(screen.queryByRole("dialog", { name: "Raw JSON Data" })).not.toBeInTheDocument();
   });
 
-  it("should show popup on clicking 'Raw JSON Data' button", async () => {
+  it("should show modal on clicking 'Raw JSON Data' button", async () => {
     const user = userEvent.setup();
 
     render(<Annotations annotations={[]} />);
 
-    expect(screen.getByTestId("raw-annotations-json-data")).not.toBeVisible();
+    expect(screen.queryByRole("dialog", { name: "Raw JSON Data" })).not.toBeInTheDocument();
+    expect(screen.queryByTestId("raw-annotations-json-data")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Download" })).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Raw JSON Data" }));
 
     await waitFor(() => {
-      expect(screen.getByTestId("raw-annotations-json-data")).toBeVisible();
+      expect(screen.getByRole("dialog", { name: "Raw JSON Data" })).toBeInTheDocument();
     });
-    expect(screen.getByRole("button", { name: "Download" })).toBeVisible();
+    expect(screen.getByTestId("raw-annotations-json-data")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Download" })).toBeInTheDocument();
   });
 
   it("should render with annotations", async () => {
@@ -43,12 +47,10 @@ describe("Annotations Component", () => {
 
     render(<Annotations annotations={annotations} />);
 
-    expect(screen.getByTestId("raw-annotations-json-data")).not.toBeVisible();
-
     await user.click(screen.getByRole("button", { name: "Raw JSON Data" }));
 
     await waitFor(() => {
-      expect(screen.getByTestId("raw-annotations-json-data")).toBeVisible();
+      expect(screen.getByTestId("raw-annotations-json-data")).toBeInTheDocument();
     });
     expect(screen.getByTestId("raw-annotations-json-data")).toHaveTextContent(
       JSON.stringify(annotations),
@@ -66,7 +68,7 @@ describe("Annotations Component", () => {
     await user.click(screen.getByRole("button", { name: "Raw JSON Data" }));
 
     await waitFor(() => {
-      expect(screen.getByRole("button", { name: "Download" })).toBeVisible();
+      expect(screen.getByRole("button", { name: "Download" })).toBeInTheDocument();
     });
 
     await user.click(screen.getByRole("button", { name: "Download" }));
