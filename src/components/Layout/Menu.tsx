@@ -4,7 +4,9 @@ export const Menu = () => {
   return (
     <List spacing={3}>
       <ListItem>
-        <Link href="#">Experiment 1</Link>
+        <Link href="#" fontWeight="bold">
+          Experiment 1
+        </Link>
       </ListItem>
 
       <ListItem>
