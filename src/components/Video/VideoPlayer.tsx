@@ -5,18 +5,12 @@ import {
   useCallback,
   PropsWithChildren,
 } from "react";
-import {
-  Box,
-  HStack,
-  Button,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  Spinner,
-} from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 import { MdOutlinePlayArrow, MdOutlinePause } from "react-icons/md";
+import { VideoControls } from "./VideoControls";
+import { calculateRectangle } from "../../utility/calculateRectangle";
 import { Annotation } from "../../utility/types";
+import { VIDEO_FRAME_RATE } from "../../utility/constants";
 
 interface Props {
   annotations: Annotation[][];
@@ -25,8 +19,6 @@ interface Props {
 
   errorGettingAnnotations: unknown;
 }
-
-const VIDEO_FRAME_RATE = 30;
 
 const CenteredView = ({ children }: PropsWithChildren) => (
   <Box width="100%" height="100%" position="relative">
@@ -52,6 +44,7 @@ export const VideoPlayer = ({
   });
   const [frameDataInfo, setFrameDataInfo] = useState("");
   const [videoPosition, setVideoPosition] = useState(0);
+  const [videoDuration, setVideoDuration] = useState(0);
   const [playbackIcon, setPlaybackIcon] = useState(<MdOutlinePlayArrow />);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -90,21 +83,17 @@ export const VideoPlayer = ({
           `Frame ${frame}: ${frameData ? JSON.stringify(frameData) : "-"}`,
         );
         if (frameData) {
-          frameData.forEach((rect) => {
-            const [x, y, width, height] = rect;
-            // x and y represent coordinates for the centre of the rectangle
-            // so need to calculate top left coordinates for canvas drawing.
-            // Need to multiply the coordinates by how much the respective
-            // canvas dimension is a proportion of the video's original
-            // dimension.
-            const topLeftX =
-              (x - width / 2) * (canvasDimensions.width / video.videoWidth);
-            const topLeftY =
-              (y - height / 2) * (canvasDimensions.height / video.videoHeight);
-            const scaledWidth =
-              width * (canvasDimensions.width / video.videoWidth);
-            const scaledHeight =
-              height * (canvasDimensions.height / video.videoHeight);
+          frameData.forEach((rectangle) => {
+            const videoNativeDimensions = {
+              width: video.videoWidth,
+              height: video.videoHeight,
+            };
+            const [topLeftX, topLeftY, scaledWidth, scaledHeight] =
+              calculateRectangle(
+                rectangle,
+                canvasDimensions,
+                videoNativeDimensions,
+              );
             ctx.strokeStyle = "red";
             ctx.strokeRect(topLeftX, topLeftY, scaledWidth, scaledHeight);
           });
@@ -122,11 +111,14 @@ export const VideoPlayer = ({
       setVideoPosition(video.currentTime);
       drawRectangles(currentFrame);
 
+      if (videoDuration === 0) {
+        setVideoDuration(() => (isNaN(video.duration) ? 0 : video.duration));
+      }
       if (video.ended) {
         setPlaybackIcon(<MdOutlinePlayArrow />);
       }
     }
-  }, [drawRectangles]);
+  }, [drawRectangles, videoDuration]);
 
   const handleResize = useCallback(() => {
     const video = videoRef.current;
@@ -223,36 +215,14 @@ export const VideoPlayer = ({
           />
         </Box>
 
-        <HStack>
-          <Box width="30%">
-            <Button onClick={handleVideoPlayback} aria-label="Playback">
-              {playbackIcon}
-            </Button>
-          </Box>
-
-          <Box
-            width="70%"
-            textAlign="right"
-            fontSize={{ base: "0.65rem", md: "1rem" }}
-            data-testid="video-frame-info"
-          >
-            {frameDataInfo}
-          </Box>
-        </HStack>
-
-        <Slider
-          aria-label="Video Scrubber"
-          onChange={handleVideoScrub}
-          min={0}
-          max={videoRef?.current?.duration ? videoRef.current.duration : 0}
-          value={videoPosition}
-          step={1 / VIDEO_FRAME_RATE}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
+        <VideoControls
+          onVideoPlayback={handleVideoPlayback}
+          playbackIcon={playbackIcon}
+          frameDataInfo={frameDataInfo}
+          onVideoScrub={handleVideoScrub}
+          videoDuration={videoDuration}
+          videoPosition={videoPosition}
+        />
       </>
     )
   );
