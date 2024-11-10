@@ -4,7 +4,7 @@ import { Comments } from "./Comments";
 import * as UseScrollToModule from "../../hooks/useScrollTo";
 
 describe("Comments Component", () => {
-  vi.mock("../../hooks/useGetComments.ts", () => ({
+  vi.mock("../../hooks/useGetComments", () => ({
     useGetComments: () => [
       {
         id: "123",
@@ -23,7 +23,7 @@ describe("Comments Component", () => {
     ],
   }));
 
-  vi.mock("../../hooks/useScrollTo.ts", () => ({
+  vi.mock("../../hooks/useScrollTo", () => ({
     useScrollTo: () => ({
       current: {
         scrollTo: vi.fn(),
