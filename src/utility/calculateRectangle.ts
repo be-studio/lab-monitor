@@ -15,15 +15,14 @@ export const calculateRectangle = (
   const { width: canvasWidth, height: canvasHeight } = canvasDimensions;
   const { width: videoNativeWidth, height: videoNativeHeight } =
     videoNativeDimensions;
-  // x and y represent coordinates for the centre of the rectangle
-  // so need to calculate top left coordinates for canvas drawing.
+  // x and y represent coordinates for the top left of the rectangle.
   // Need to multiply the coordinates by how much the respective
   // canvas dimension is a proportion of the video's original
   // dimension (so-called 'factor').
   const widthFactor = canvasWidth / videoNativeWidth;
   const heightFactor = canvasHeight / videoNativeHeight;
-  const topLeftX = (x - width / 2) * widthFactor;
-  const topLeftY = (y - height / 2) * heightFactor;
+  const topLeftX = x * widthFactor;
+  const topLeftY = y * heightFactor;
   const scaledWidth = width * widthFactor;
   const scaledHeight = height * heightFactor;
 

@@ -127,3 +127,16 @@ The main resources used where further information was required to aid in buildin
 
 - Official documentation of React and the various other libraries used
 - Forums, e.g., Stack Overflow (although care was taken assessing the quality and accuracy of information available here wherever possible).
+
+## UPDATE
+
+- The interface fits onto one screen without scrolling on a large enough desktop screen or in a mobile device in portrait mode. To deal with other screen sizes outside these the folloiwing approaches can be taken:
+    - Currently, the styling prioritises the video's size and its height especially on landscape screens pushing the comments stream out of view and/or is clipped itself. In the immediate term for desktop if given time I would have the video resize its height while maintining aspect ratio with its width, plus centering the video, as one reduced the window height size so as to move the comments stream up and prevent a window scroll.
+    - Separate styles for landscape vs portrait, possibly adjusting the video size more responsively to accommodate the comments stream.
+    - A change in the layout of the various parts of the interface between portrait and landscape, either different positions of the various elements (e.g. comments stream moved to the side vs the bottom). Or using other layout techniques to accommodate different content such as a modal/popup/accordion/tabs where appropriate.
+    - To deal with the problem of mobile browsers overlying bars like tab/navigation bars on the interface, various options include:
+      - Using `100%` instead of `100vh` heights if possible
+      - Fixing the comments stream to the bottom of the window with `position:fixed` but need to adjust the video player's size responsively.
+      - Using newer units such as `dvh`, `svh` if target web browsers support these. These units can return heights for the available viewport size accounting for overlaid browser bars.
+      - Using some calculation to deduct from `100vh` to help return a height that accommodates the mobile browser bars.
+      - I am aware on forums of various approaches developers have taken including the above, some working under certain scenarios (e.g., certain mobile platforms/devices), others not.
