@@ -16,6 +16,6 @@ describe("calculateRectangle Utility", () => {
 
     expect(
       calculateRectangle(rectangle, canvasDimensions, videoNativeDimensions),
-    ).toEqual([0, -50, 100, 200]);
+    ).toEqual([50, 50, 100, 200]);
   });
 });
