@@ -143,4 +143,4 @@ The main resources used where further information was required to aid in buildin
 
 ## UPDATE 2
 
-Code has been written to ensure the interface fits on one screen and requiring no scrolling (the exception are mobile devices where the overlay ofnative browser bars such as tabs, navigation, etc., can interfere with the interface. This has been described in detail earlier).
+Code has been written to ensure the interface fits on one screen and requiring no scrolling (the exception are mobile devices where the overlay of native browser bars such as tabs, navigation, etc., can interfere with the interface. This has been described in detail earlier).
