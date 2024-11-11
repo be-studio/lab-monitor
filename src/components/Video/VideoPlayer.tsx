@@ -60,7 +60,6 @@ export const VideoPlayer = ({
     if (video) {
       const renderedVideoHeight =
         video.videoHeight * (video.clientWidth / video.videoWidth);
-      console.log(video.videoHeight, video.clientWidth, video.videoWidth);
 
       setCanvasDimensions({
         width: video.clientWidth,
