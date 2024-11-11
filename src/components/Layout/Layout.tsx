@@ -1,6 +1,8 @@
 import {
   Grid,
   GridItem,
+  Flex,
+  Box,
   Drawer,
   DrawerBody,
   DrawerOverlay,
@@ -25,16 +27,14 @@ export const Layout = () => {
       <Grid
         templateAreas={{
           base: `"header"
-          "main"
-          "footer"`,
+          "main"`,
           md: `"header header"
-          "nav main"
-          "nav footer"`,
+          "nav main"`,
         }}
         gridTemplateRows={{
-          base: "3em 1fr 40vh",
-          sm: "3em 1fr 10em",
-          md: "3em 1fr 10em",
+          base: "3em 1fr",
+          sm: "3em 1fr",
+          md: "3em 1fr",
         }}
         gridTemplateColumns={{
           base: "1fr",
@@ -59,11 +59,15 @@ export const Layout = () => {
         </GridItem>
 
         <GridItem backgroundColor="gray.100" area="main">
-          <VideoContainer />
-        </GridItem>
+          <Flex flexDirection="column">
+            <Box flexShrink="1" flexGrow="0">
+              <VideoContainer />
+            </Box>
 
-        <GridItem backgroundColor="white" area="footer">
-          <Comments />
+            <Box height={{ base: "200px", md: "200px" }}>
+              <Comments />
+            </Box>
+          </Flex>
         </GridItem>
       </Grid>
 

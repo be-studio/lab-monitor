@@ -7,7 +7,7 @@ export const VideoContainer = () => {
   const { isLoading, error, annotations } = useGetAnnotations();
 
   return (
-    <Box height="100%" padding="2rem">
+    <Box height="100%" maxHeight="100%" padding="2rem">
       <Heading
         fontSize={{ base: "1rem", sm: "1rem", md: "1.2rem" }}
         paddingBottom="0.25rem"

@@ -140,3 +140,7 @@ The main resources used where further information was required to aid in buildin
       - Using newer units such as `dvh`, `svh` if target web browsers support these. These units can return heights for the available viewport size accounting for overlaid browser bars.
       - Using some calculation to deduct from `100vh` to help return a height that accommodates the mobile browser bars.
       - I am aware on forums of various approaches developers have taken including the above, some working under certain scenarios (e.g., certain mobile platforms/devices), others not.
+
+## UPDATE 2
+
+Code has been written to ensure the interface fits on one screen and requiring no scrolling (the exception are mobile devices where the overlay ofnative browser bars such as tabs, navigation, etc., can interfere with the interface. This has been described in detail earlier).

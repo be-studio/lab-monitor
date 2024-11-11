@@ -41,6 +41,7 @@ export const VideoPlayer = ({
   const [canvasDimensions, setCanvasDimensions] = useState({
     width: 0,
     height: 0,
+    top: 0,
   });
   const [frameDataInfo, setFrameDataInfo] = useState("");
   const [videoPosition, setVideoPosition] = useState(0);
@@ -49,19 +50,25 @@ export const VideoPlayer = ({
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  useEffect(() => {
+  // Only on loaded metadata of the video will we have all the information about
+  // video such as its native dimensions to be able to correctly calculate sizes
+  // for the canvas and its position in relation to the size and position of the
+  // rendered video.
+  const handleLoadedMetadata = () => {
     const video = videoRef.current;
-    const canvas = canvasRef.current;
 
-    if (video && canvas) {
-      // Need to set the canvas dimensions to match that of the video to
-      // correctly draw the annotation rectangles.
+    if (video) {
+      const renderedVideoHeight =
+        video.videoHeight * (video.clientWidth / video.videoWidth);
+      console.log(video.videoHeight, video.clientWidth, video.videoWidth);
+
       setCanvasDimensions({
         width: video.clientWidth,
-        height: video.clientHeight,
+        height: renderedVideoHeight,
+        top: (video.clientHeight - renderedVideoHeight) / 2,
       });
     }
-  }, []);
+  };
 
   const drawRectangles = useCallback(
     (frame: number) => {
@@ -125,9 +132,13 @@ export const VideoPlayer = ({
     const canvas = canvasRef.current;
 
     if (video && canvas) {
+      const renderedVideoHeight =
+        video.videoHeight * (video.clientWidth / video.videoWidth);
+
       setCanvasDimensions({
         width: video.clientWidth,
-        height: video.clientHeight,
+        height: renderedVideoHeight,
+        top: (video.clientHeight - renderedVideoHeight) / 2,
       });
       // Need to redraw rectangles for the current frame on resize of window.
       drawRectangles(Math.floor(video.currentTime * VIDEO_FRAME_RATE));
@@ -190,14 +201,24 @@ export const VideoPlayer = ({
   return (
     annotations && (
       <>
-        <Box position="relative">
+        <Box
+          position="relative"
+          width="fit-content"
+          height="fit-content"
+          margin="0 auto"
+        >
           <video
             ref={videoRef}
-            style={{ width: "100%", height: "auto" }}
+            style={{
+              width: "auto",
+              height: "calc(100vh - 450px)",
+              margin: "0 auto",
+            }}
             poster="video-poster.jpg"
             playsInline
             muted
             aria-label="Video"
+            onLoadedMetadata={handleLoadedMetadata}
           >
             <source
               src="https://reach-industries-candidate-tests.s3.eu-west-2.amazonaws.com/FrontendCandidateTest-FINAL.mp4"
@@ -208,7 +229,7 @@ export const VideoPlayer = ({
           </video>
           <canvas
             ref={canvasRef}
-            style={{ position: "absolute", top: 0, left: 0 }}
+            style={{ position: "absolute", top: canvasDimensions.top, left: 0 }}
             width={canvasDimensions.width}
             height={canvasDimensions.height}
             data-testid="canvas"
